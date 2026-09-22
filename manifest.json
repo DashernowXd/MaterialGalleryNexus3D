@@ -1,0 +1,19 @@
+{
+  "short_name": "Nexus3D",
+  "name": "Nexus3D // Estudio de Materiales Interactivos & Simulador Físico",
+  "description": "Librería de materiales interactivos 3D con Three.js y React 19. Interactividad de cursor, deformación por shaders, botonera háptica y simulador físico.",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#060913",
+  "theme_color": "#060913",
+  "display": "standalone",
+  "orientation": "landscape-primary",
+  "categories": ["graphics", "utilities", "education", "design"]
+}
