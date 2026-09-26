@@ -13,6 +13,9 @@ const ButtonsStudioView = lazy(() =>
 const CreditCardStudioView = lazy(() =>
   import('./views/CreditCardStudioView').then(m => ({ default: m.CreditCardStudioView }))
 );
+const SphereNetworkStudioView = lazy(() =>
+  import('./views/SphereNetworkStudioView').then(m => ({ default: m.SphereNetworkStudioView }))
+);
 
 /**
  * Fallback accesible y estilizado con microanimación para Suspense
@@ -65,6 +68,8 @@ export function App() {
             <Route path="/" element={<MaterialsStudioView />} />
             <Route path="/3d-buttons" element={<ButtonsStudioView />} />
             <Route path="/credit-card" element={<CreditCardStudioView />} />
+            <Route path="/network" element={<SphereNetworkStudioView />} />
+            <Route path="/spheres-network" element={<Navigate to="/network" replace />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </Suspense>

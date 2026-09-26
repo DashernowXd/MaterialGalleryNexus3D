@@ -35,6 +35,24 @@
 - Generación dinámica de esferas con simulación de gravedad, restitución y rebote elástico.
 - Interacción de colisión con el puntero en el espacio tridimensional.
 
+### 5. 🌐 Red de Esferas Lumínicas & Tubos Conductores (Nuevo)
+- **Generador Dinámico de Esferas:** Creación libre en el espacio 3D o con clic directo en el suelo reflectante holográfico.
+- **Conductores de Plasma Fotónico:** Conexión interactiva mediante tubos cilíndricos con shaders GLSL de pulsos de luz animados.
+- **Tubos Libres Sin Nodo (Cortos y Largos):**
+  - Posibilidad de acoplar tubos radiantes a cualquier esfera sin necesidad de un nodo de llegada.
+  - Opciones de longitud: **Corto (~1.8m)** y **Largo (~5.2m)** con botón de alternancia en vivo.
+  - Punta con electrodo terminal de chispa y `PointLight` localizada.
+- **Respuesta Lumínica Instantánea:**
+  - Las esferas aisladas permanecen en estado latente/dormido.
+  - Al conectarles tubos (ya sea a otra esfera o tubos libres sin nodo), ¡se cierran los circuitos, se encienden al instante con halos fotónicos y proyectan luz dinámica real!
+- **Modos de Interacción:** Alternancia fluida entre trazado de tubos táctil y arrastre/reposicionamiento espacial 3D con actualización geométrica en tiempo real.
+- **Presets Geométricos:** Constelación Cuántica, Anillo de Resonancia, Triángulo de Plasma, Cubo Reticular y Átomo con Sondas.
+- **Esferas Regulables de Tamaño Individual:**
+  - Control de radio continuo desde `0.25m` (micro) hasta `1.40m` (titán).
+  - Presets instantáneos en el Inspector: **Mini (0.35m)**, **Normal (0.55m)**, **Grande (0.85m)** y **Titán (1.20m)**.
+  - Escalado geométrico de halos, anillos de selección y radio lumínico de PointLights con retroalimentación sonora tonal modulada por frecuencia.
+- **Telemetría Energética:** Contador de nodos iluminados, tubos activos, tubos libres, potencia simulada en MegaWatts y cobertura de red.
+
 ---
 
 ## 🚀 Tecnologías

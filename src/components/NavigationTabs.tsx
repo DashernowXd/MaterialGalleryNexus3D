@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Sparkles, Radio, CreditCard } from 'lucide-react';
+import { Sparkles, Radio, CreditCard, Share2 } from 'lucide-react';
 
 export const NavigationTabs: React.FC = () => {
   return (
@@ -33,8 +33,19 @@ export const NavigationTabs: React.FC = () => {
       >
         <CreditCard size={15} aria-hidden="true" />
         <span>Tarjeta 3D & Flyer</span>
-        <span className="tab-pill new" aria-hidden="true">Nuevo</span>
+        <span className="tab-pill" aria-hidden="true">Titanium</span>
+      </NavLink>
+
+      <NavLink
+        to="/network"
+        className={({ isActive }) => `nav-tab-link ${isActive ? 'active' : ''}`}
+        aria-label="Estudio 4: Red de esferas y tubos conductores con respuesta lumínica"
+      >
+        <Share2 size={15} aria-hidden="true" />
+        <span>Red de Esferas & Tubos</span>
+        <span className="tab-pill new" aria-hidden="true">Fotónica</span>
       </NavLink>
     </nav>
   );
 };
+

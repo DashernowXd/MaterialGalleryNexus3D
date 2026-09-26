@@ -305,6 +305,228 @@ class SoundSynthesizer {
       // Ignorar
     }
   }
+
+  /**
+   * Sonido futurista de generación de esfera cuántica (Pop armónico brillante)
+   */
+  public playSphereSpawnSound(pitchMultiplier = 1) {
+    if (this.isMuted) return;
+    this.initContext();
+    if (!this.ctx) return;
+
+    try {
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(320 * pitchMultiplier, now);
+      osc.frequency.exponentialRampToValueAtTime(740 * pitchMultiplier, now + 0.08);
+
+      gain.gain.setValueAtTime(0.18, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start(now);
+      osc.stop(now + 0.11);
+    } catch {
+      // Ignorar
+    }
+  }
+
+  /**
+   * Sonido de conexión energética entre esferas (Arpegio ascendente de plasma)
+   */
+  public playSphereConnectSound() {
+    if (this.isMuted) return;
+    this.initContext();
+    if (!this.ctx) return;
+
+    try {
+      const now = this.ctx.currentTime;
+      // Arpegio radiante de 4 frecuencias: C5, E5, G5, B5
+      const freqs = [523.25, 659.25, 783.99, 987.77];
+      freqs.forEach((freq, idx) => {
+        if (!this.ctx) return;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(freq, now + idx * 0.035);
+
+        gain.gain.setValueAtTime(0.12, now + idx * 0.035);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.035 + 0.22);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+
+        osc.start(now + idx * 0.035);
+        osc.stop(now + idx * 0.035 + 0.23);
+      });
+    } catch {
+      // Ignorar
+    }
+  }
+
+  /**
+   * Sonido de desconexión de tubo energético (Descenso de frecuencia)
+   */
+  public playSphereDisconnectSound() {
+    if (this.isMuted) return;
+    this.initContext();
+    if (!this.ctx) return;
+
+    try {
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(440, now);
+      osc.frequency.exponentialRampToValueAtTime(110, now + 0.16);
+
+      gain.gain.setValueAtTime(0.1, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.16);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start(now);
+      osc.stop(now + 0.17);
+    } catch {
+      // Ignorar
+    }
+  }
+
+  /**
+   * Sonido de selección o foco de nodo de esfera (Blip de telemetría)
+   */
+  public playNodeSelectSound() {
+    if (this.isMuted) return;
+    this.initContext();
+    if (!this.ctx) return;
+
+    try {
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(880, now);
+      osc.frequency.exponentialRampToValueAtTime(1320, now + 0.04);
+
+      gain.gain.setValueAtTime(0.09, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start(now);
+      osc.stop(now + 0.055);
+    } catch {
+      // Ignorar
+    }
+  }
+
+  /**
+   * Sonido de extensión / acople de tubo conductor sin nodo (siseo plasmático y resonancia)
+   */
+  public playOpenTubeAttachSound(isLong: boolean = false) {
+    if (this.isMuted) return;
+    this.initContext();
+    if (!this.ctx) return;
+
+    try {
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = isLong ? 'sawtooth' : 'sine';
+      const startFreq = isLong ? 220 : 440;
+      const endFreq = isLong ? 880 : 720;
+      const duration = isLong ? 0.22 : 0.12;
+
+      osc.frequency.setValueAtTime(startFreq, now);
+      osc.frequency.exponentialRampToValueAtTime(endFreq, now + duration);
+
+      gain.gain.setValueAtTime(0.14, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start(now);
+      osc.stop(now + duration + 0.01);
+    } catch {
+      // Ignorar
+    }
+  }
+
+  /**
+   * Sonido de retracción / remoción de tubo sin nodo
+   */
+  public playOpenTubeDetachSound() {
+    if (this.isMuted) return;
+    this.initContext();
+    if (!this.ctx) return;
+
+    try {
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(620, now);
+      osc.frequency.exponentialRampToValueAtTime(180, now + 0.1);
+
+      gain.gain.setValueAtTime(0.1, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start(now);
+      osc.stop(now + 0.11);
+    } catch {
+      // Ignorar
+    }
+  }
+
+  /**
+   * Sonido de calibración de tamaño de esfera (frecuencia dependiente del radio: agudo para pequeñas, grave profundo para gigantes)
+   */
+  public playSphereResizeSound(radius: number) {
+    if (this.isMuted) return;
+    this.initContext();
+    if (!this.ctx) return;
+
+    try {
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      // Esferas grandes = frecuencias bajas (140Hz), esferas chicas = frecuencias altas (680Hz)
+      const clampedRadius = Math.max(0.25, Math.min(1.4, radius));
+      const freq = 720 - (clampedRadius - 0.25) * 450;
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, now);
+      osc.frequency.exponentialRampToValueAtTime(freq * 0.9, now + 0.08);
+
+      gain.gain.setValueAtTime(0.08, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start(now);
+      osc.stop(now + 0.085);
+    } catch {
+      // Ignorar
+    }
+  }
 }
 
 export const soundSynth = new SoundSynthesizer();
