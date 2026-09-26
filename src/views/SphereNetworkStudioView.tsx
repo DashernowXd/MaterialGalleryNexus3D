@@ -10,7 +10,7 @@ import {
 import { SphereNetworkHUD } from '../components/SphereNetworkHUD';
 import { SphereInspectorPanel } from '../components/SphereInspectorPanel';
 import { useDocumentMetadata } from '../hooks/useDocumentMetadata';
-import { Zap, Link2, Sparkles, HelpCircle } from 'lucide-react';
+import { Zap, Link2, Sparkles, Sliders } from 'lucide-react';
 
 const INITIAL_SETTINGS: NetworkSettings = {
   tubeThickness: 0.08,
@@ -46,6 +46,22 @@ export const SphereNetworkStudioView: React.FC = () => {
   const [isConnectMode, setIsConnectMode] = useState<boolean>(true);
   const [isClickToSpawn, setIsClickToSpawn] = useState<boolean>(false);
 
+  // Estado de apertura del panel inspector (automático por resolución)
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth > 960;
+    }
+    return true;
+  });
+
+  const handleSelectSphere = useCallback((sphere: NetworkSphereData | null) => {
+    setSelectedSphere(sphere);
+    // En móviles / tablets, abrir automáticamente el drawer cuando se toca una esfera
+    if (sphere && typeof window !== 'undefined' && window.innerWidth <= 960) {
+      setIsSidebarOpen(true);
+    }
+  }, []);
+
   // Inicializar hook Three.js
   const {
     spawnSphere,
@@ -73,7 +89,7 @@ export const SphereNetworkStudioView: React.FC = () => {
     setClickToSpawnMode,
   } = useThreeSphereNetworkScene({
     canvasRef,
-    onSelectSphere: setSelectedSphere,
+    onSelectSphere: handleSelectSphere,
     onTelemetryUpdate: setTelemetry,
   });
 
@@ -155,6 +171,8 @@ export const SphereNetworkStudioView: React.FC = () => {
           isConnectMode={isConnectMode}
           isClickToSpawn={isClickToSpawn}
           selectedSphereId={selectedSphere?.id}
+          isSidebarOpen={isSidebarOpen}
+          onToggleSidebar={() => setIsSidebarOpen(prev => !prev)}
           onToggleConnectMode={handleToggleConnectMode}
           onToggleClickToSpawn={handleToggleClickToSpawn}
           onSpawnSphere={() => spawnSphere()}
@@ -168,6 +186,20 @@ export const SphereNetworkStudioView: React.FC = () => {
           onLoadPreset={(preset: NetworkPreset) => loadPreset(preset)}
           onResetCamera={resetCamera}
         />
+
+        {/* Botón flotante para abrir el panel cuando está cerrado (especialmente útil en móviles/tablets) */}
+        {!isSidebarOpen && (
+          <button
+            type="button"
+            className="inspector-open-floating-btn"
+            onClick={() => setIsSidebarOpen(true)}
+            title="Abrir panel lateral de configuración e inspector"
+            aria-label="Abrir panel inspector"
+          >
+            <Sliders size={16} aria-hidden="true" />
+            <span>Inspector & Ajustes</span>
+          </button>
+        )}
 
         {/* Guía flotante contextual */}
         <div className="viewport-overlay-hint" aria-hidden="true">
@@ -194,6 +226,8 @@ export const SphereNetworkStudioView: React.FC = () => {
       <SphereInspectorPanel
         selectedSphere={selectedSphere}
         settings={settings}
+        isOpen={isSidebarOpen}
+        onClosePanel={() => setIsSidebarOpen(false)}
         onUpdateSettings={handleUpdateSettings}
         onUpdateSphereColor={updateSelectedSphereColor}
         onUpdateSphereRadius={updateSelectedSphereRadius}

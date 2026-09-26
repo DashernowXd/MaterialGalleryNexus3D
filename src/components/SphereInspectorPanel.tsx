@@ -45,11 +45,15 @@ interface SphereInspectorPanelProps {
   onRemoveOpenTube: (openTubeId: string) => void;
   onToggleOpenTubeLength: (openTubeId: string) => void;
   onCloseSelection: () => void;
+  isOpen?: boolean;
+  onClosePanel?: () => void;
 }
 
 export const SphereInspectorPanel: React.FC<SphereInspectorPanelProps> = ({
   selectedSphere,
   settings,
+  isOpen = true,
+  onClosePanel,
   onUpdateSettings,
   onUpdateSphereColor,
   onUpdateSphereRadius,
@@ -67,9 +71,25 @@ export const SphereInspectorPanel: React.FC<SphereInspectorPanelProps> = ({
 
   return (
     <aside
-      className="network-inspector-sidebar"
+      className={`network-inspector-sidebar ${isOpen ? 'is-open' : 'is-closed'}`}
       aria-label="Panel de configuración de red e inspección de nodos"
     >
+      {/* Manija táctil y barra superior para dispositivos móviles / tablets */}
+      <div className="mobile-drawer-header">
+        <div className="mobile-drawer-handle" aria-hidden="true" />
+        {onClosePanel && (
+          <button
+            type="button"
+            className="mobile-drawer-close-btn"
+            onClick={onClosePanel}
+            title="Ocultar panel inspector"
+            aria-label="Cerrar panel de inspector"
+          >
+            ✕
+          </button>
+        )}
+      </div>
+
       {/* 1. SECCIÓN: Nodo Seleccionado */}
       <div className="inspector-card-group">
         <div className="inspector-card-header">

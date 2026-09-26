@@ -13,6 +13,7 @@ import {
   Share2,
   Minimize2,
   Maximize2,
+  Sliders,
 } from 'lucide-react';
 import { NetworkTelemetry, NetworkPreset, OpenTubeLengthType } from '../types/sphereNetwork';
 
@@ -21,6 +22,8 @@ interface SphereNetworkHUDProps {
   isConnectMode: boolean;
   isClickToSpawn: boolean;
   selectedSphereId?: string | null;
+  isSidebarOpen?: boolean;
+  onToggleSidebar?: () => void;
   onToggleConnectMode: () => void;
   onToggleClickToSpawn: () => void;
   onSpawnSphere: () => void;
@@ -40,6 +43,8 @@ export const SphereNetworkHUD: React.FC<SphereNetworkHUDProps> = ({
   isConnectMode,
   isClickToSpawn,
   selectedSphereId,
+  isSidebarOpen,
+  onToggleSidebar,
   onToggleConnectMode,
   onToggleClickToSpawn,
   onSpawnSphere,
@@ -291,6 +296,20 @@ export const SphereNetworkHUD: React.FC<SphereNetworkHUDProps> = ({
         >
           <RotateCcw size={14} aria-hidden="true" />
         </button>
+
+        {/* Alternar Panel Inspector */}
+        {onToggleSidebar && (
+          <button
+            type="button"
+            className={`hud-action-btn ${isSidebarOpen ? 'active-highlight' : 'secondary'} hud-sidebar-toggle-btn`}
+            onClick={onToggleSidebar}
+            title={isSidebarOpen ? 'Ocultar panel inspector' : 'Mostrar panel inspector'}
+            aria-label="Alternar panel inspector"
+          >
+            <Sliders size={14} aria-hidden="true" />
+            <span className="hud-btn-text">Panel</span>
+          </button>
+        )}
       </div>
     </div>
   );

@@ -899,6 +899,29 @@ input:checked + .slider:before {
   }
 }
 
+@media (max-width: 580px) {
+  .gallery-container {
+    left: 8px;
+    width: calc(50% - 12px);
+    top: 68px;
+    max-height: 40vh;
+    padding: 10px 8px;
+  }
+
+  .inspector-container {
+    right: 8px;
+    width: calc(50% - 12px);
+    top: 68px;
+    max-height: 40vh;
+    padding: 10px 8px;
+  }
+
+  .ball-counter-hud {
+    bottom: 8px;
+    width: calc(100% - 16px);
+  }
+}
+
 /* ==========================================================
    NAVEGACIÓN POR PESTAÑAS (NavigationTabs)
    ========================================================== */
@@ -950,6 +973,82 @@ input:checked + .slider:before {
   background: rgba(16, 185, 129, 0.2);
   color: #34d399;
   border: 1px solid rgba(16, 185, 129, 0.35);
+}
+
+/* Reglas Responsivas de Navegación y Encabezado */
+@media (max-width: 1200px) {
+  .tab-pill {
+    display: none;
+  }
+}
+
+@media (max-width: 960px) {
+  .brand-subtitle {
+    display: none;
+  }
+  .header-glass {
+    padding: 0 16px;
+  }
+  .nav-tabs-container {
+    gap: 4px;
+    padding: 3px 5px;
+  }
+  .nav-tab-link {
+    padding: 5px 10px;
+    font-size: 0.76rem;
+    gap: 6px;
+  }
+}
+
+@media (max-width: 768px) {
+  .header-glass {
+    padding: 0 10px;
+    gap: 8px;
+  }
+  .header-brand {
+    gap: 8px;
+  }
+  .brand-title {
+    font-size: 1rem;
+  }
+  .brand-icon-wrapper {
+    width: 32px;
+    height: 32px;
+  }
+  .header-actions .badge-pill:not(.highlight) {
+    display: none;
+  }
+  .nav-tabs-container {
+    overflow-x: auto;
+    max-width: calc(100vw - 120px);
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    flex-shrink: 1;
+  }
+  .nav-tabs-container::-webkit-scrollbar {
+    display: none;
+  }
+  .nav-tab-link {
+    padding: 5px 9px;
+    font-size: 0.72rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .header-actions .badge-pill {
+    display: none;
+  }
+  .nav-tab-link span {
+    display: none;
+  }
+  .nav-tab-link {
+    padding: 6px 9px;
+  }
+  .nav-tab-link.active span {
+    display: inline;
+  }
 }
 
 /* ==========================================================
@@ -1742,6 +1841,18 @@ input:checked + .slider:before {
   }
 }
 
+@media (max-width: 600px) {
+  .credit-card-flyer-panel {
+    padding: 16px;
+    height: 55vh;
+  }
+  .card-themes-grid,
+  .specs-grid {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+}
+
 /* ==========================================================================
    ESTUDIO 4: RED DE ESFERAS & TUBOS LUMÍNICOS (ESTILOS HUD, CANVAS & PANEL)
    ========================================================================== */
@@ -2044,6 +2155,24 @@ input:checked + .slider:before {
   overflow-y: auto;
   z-index: 10;
   box-shadow: -8px 0 32px rgba(0, 0, 0, 0.4);
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              padding 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.25s ease,
+              transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.network-inspector-sidebar.is-closed {
+  width: 0;
+  padding-left: 0;
+  padding-right: 0;
+  border-left: none;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.mobile-drawer-header {
+  display: none;
 }
 
 .inspector-card-group {
@@ -2389,16 +2518,258 @@ input:checked + .slider:before {
   line-height: 1.45;
 }
 
-/* Adaptabilidad Responsiva para Red */
+/* Botón Flotante para Reabrir Panel Inspector */
+.inspector-open-floating-btn {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  z-index: 20;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: var(--radius-full);
+  background: rgba(13, 17, 27, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(6, 182, 212, 0.45);
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(6, 182, 212, 0.35);
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: floatingGlow 3s infinite ease-in-out;
+}
+
+@keyframes floatingGlow {
+  0%, 100% {
+    box-shadow: 0 8px 24px rgba(6, 182, 212, 0.35);
+    border-color: rgba(6, 182, 212, 0.45);
+  }
+  50% {
+    box-shadow: 0 10px 30px rgba(6, 182, 212, 0.65), 0 0 16px rgba(236, 72, 153, 0.3);
+    border-color: rgba(6, 182, 212, 0.8);
+  }
+}
+
+.inspector-open-floating-btn:hover {
+  transform: translateY(-2px);
+  background: rgba(18, 24, 38, 0.95);
+  border-color: #38bdf8;
+  box-shadow: 0 12px 32px rgba(6, 182, 212, 0.55);
+}
+
+/* Guías de ayuda contextual en el Viewport */
+.network-canvas-container .viewport-overlay-hint {
+  top: auto;
+  bottom: 24px;
+  left: 24px;
+  transform: none;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+/* ==========================================================================
+   ADAPTABILIDAD RESPONSIVA PARA RED DE ESFERAS (DESKTOP, TABLET Y MÓVIL)
+   ========================================================================== */
+
 @media (max-width: 960px) {
   .network-studio-layout {
     flex-direction: column;
+    position: relative;
+    height: calc(100vh - 64px);
   }
-  .network-inspector-sidebar {
+
+  .network-canvas-container {
     width: 100%;
-    height: 40vh;
+    height: 100%;
+    flex: 1;
+  }
+
+  .network-canvas-container .viewport-overlay-hint {
+    display: none;
+  }
+
+  /* Cajón Desplegable (Bottom Sheet) para Inspector en Móvil/Tablet */
+  .network-inspector-sidebar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 60vh;
+    max-height: 80vh;
     border-left: none;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-top: 1px solid rgba(6, 182, 212, 0.35);
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.8);
+    background: rgba(11, 14, 23, 0.96);
+    z-index: 25;
+    padding: 10px 18px 24px;
+    transform: translateY(0);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 0.25s ease;
+  }
+
+  .network-inspector-sidebar.is-closed {
+    width: 100%;
+    height: 60vh;
+    padding: 10px 18px 24px;
+    transform: translateY(105%);
+    pointer-events: none;
+    opacity: 0;
+  }
+
+  .network-inspector-sidebar.is-open {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .mobile-drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 4px 0 10px;
+    cursor: grab;
+    width: 100%;
+    flex-shrink: 0;
+  }
+
+  .mobile-drawer-handle {
+    width: 48px;
+    height: 5px;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  .mobile-drawer-close-btn {
+    position: absolute;
+    right: 0;
+    top: -2px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    transition: all 0.2s ease;
+  }
+
+  .mobile-drawer-close-btn:hover {
+    background: rgba(239, 68, 68, 0.25);
+    color: #fca5a5;
+    border-color: rgba(239, 68, 68, 0.4);
+  }
+}
+
+@media (max-width: 768px) {
+  .network-hud-wrapper {
+    top: 8px;
+    width: calc(100% - 16px);
+    gap: 6px;
+  }
+
+  .network-telemetry-bar {
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 6px 12px;
+    gap: 10px;
+    border-radius: var(--radius-lg);
+  }
+
+  .network-telemetry-bar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .telemetry-pill {
+    font-size: 0.68rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .network-quick-actions {
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 6px 10px;
+    gap: 6px;
+    border-radius: var(--radius-lg);
+  }
+
+  .network-quick-actions::-webkit-scrollbar {
+    display: none;
+  }
+
+  .hud-action-btn {
+    padding: 5px 10px;
+    font-size: 0.72rem;
+    flex-shrink: 0;
+  }
+
+  .hud-mode-btn {
+    padding: 4px 8px;
+    font-size: 0.68rem;
+  }
+
+  .inspector-open-floating-btn {
+    bottom: 16px;
+    right: 16px;
+    padding: 8px 14px;
+    font-size: 0.74rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .network-hud-wrapper {
+    top: 6px;
+    width: calc(100% - 12px);
+  }
+
+  .network-inspector-sidebar {
+    height: 70vh;
+    padding: 8px 14px 20px;
+  }
+
+  .inspector-card-group {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .color-swatches-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+  }
+
+  .radius-presets-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+  }
+
+  .radius-preset-btn {
+    padding: 4px 6px;
+    font-size: 0.62rem;
+  }
+
+  .open-tubes-btn-grid {
+    grid-template-columns: 1fr;
+    gap: 6px;
   }
 }
 
